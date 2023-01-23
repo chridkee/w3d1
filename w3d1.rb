@@ -27,8 +27,40 @@ class Array
         return arr 
     end
 
+    def my_any?(&prc)
+        count = 0
+        self.my_each do |ele|
+            if prc.call(ele) == true
+                count += 1
+            end
+        end
+        if count > 0 
+            return true
+        else
+            false
+        end
+    end
+
+
+    def my_all?(&prc)
+        count = 0
+        length = self.length
+        self.my_each do |ele|
+            if prc.call(ele) == true
+                count += 1
+            end
+        end
+        if count == length
+            return true
+        else
+            false
+        end
+    end
+
+
 end
 
+
 a = [1, 2, 3]
-p a.my_reject { |num| num > 1 } # => [1]
-p a.my_reject { |num| num == 4 } # => [1, 2, 3]
+p a.my_all? { |num| num > 1 } # => false
+p a.my_all? { |num| num < 4 } # => true
